@@ -1,4 +1,5 @@
 data
 env
-fake_news_detector/fake_news_detector/__pycache__
 fake_news_detector/myapp/models
+fake_news_detector/fake_news_detector/settings.py
+fake_news_detector/fake_news_detector/__pycache__
