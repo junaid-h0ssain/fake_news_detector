@@ -5,8 +5,6 @@ from django.http import HttpResponse
 
 import joblib
 import os
-import re
-import string
 import nltk
 from nltk.corpus import stopwords
 
@@ -23,6 +21,7 @@ except nltk.downloader.DownloadError: # type: ignore
 model = os.path.join(os.path.dirname(__file__), 'models/fake_news_model.pkl')
 vectoriser = os.path.join(os.path.dirname(__file__), 'models/tfidf_vectorizer.pkl')
 
+# need to use joblib to use the model
 try:
     loaded_model = joblib.load(model)
     loaded_vectorizer = joblib.load(vectoriser)
@@ -31,7 +30,6 @@ except FileNotFoundError:
     print('Model not found in folder')
     loaded_model = None
     loaded_vectorizer = None
-
 
 stop_words = set(stopwords.words('english'))
 
@@ -56,12 +54,11 @@ def predict(article_text):
         return "Model not loaded. Cannot make prediction."
 
 # myapp/views.py
-from django.shortcuts import render
 
 def fake_news_detector(request):
     prediction_result = None
     confidence_score = None
-    input_article = ""
+    input_article = ''
 
     if request.method == 'POST':
         input_article = request.POST.get('article_text', '')
